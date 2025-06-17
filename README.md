@@ -31,7 +31,6 @@ amazon-ratings-data-pipeline/
 ├── data/
 │ └── ratings_sample.csv
 ├── output/
-│ ├── tmp_ratings_month_7/
 │ └──aggregated_ratings_month_7.csv
 ├── docker-compose.yml
 ├── .gitignore
