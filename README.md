@@ -12,6 +12,31 @@ It consists of four Dockerized microservices that work together to:
 
 The system is designed to be scalable, reproducible, and modular, each part runs as an isolated container using Docker Compose.
 
+## Project Structure
+```
+amazon-ratings-data-pipeline/
+├── ingestion/
+│ ├── main.py
+│ ├── requirements.txt
+│ └── Dockerfile
+├── preprocessing/
+│ ├── main.py
+│ ├── Dockerfile
+│ └── jars
+│      └── postgresql-42.7.7.jar
+├── delivery/
+│ ├── main.py
+│ ├── requirements.txt
+│ └── Dockerfile
+├── data/
+│ └── ratings_sample.csv
+├── output/
+│ └──aggregated_ratings_month_7.csv
+├── docker-compose.yml
+├── .gitignore
+├── README.md
+```
+
 ## How to Run the Project
 
 ### 1. Build and Start Services
