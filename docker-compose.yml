@@ -1,0 +1,57 @@
+services:
+  ingestion:
+    build:
+      context: ./ingestion
+      dockerfile: Dockerfile
+    depends_on:
+      - storage-db
+    volumes:
+      - ./data:/data  
+    networks:
+      - backend
+    environment:
+      - DB_HOST=storage-db
+      - DB_PORT=5432
+      - DB_NAME=ratings
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+  storage-db:
+    image: postgres:latest
+    container_name: storage-db
+    environment:
+      POSTGRES_DB: ratings
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  preprocessing:
+    build:
+      context: .
+      dockerfile: preprocessing/Dockerfile
+    depends_on:
+      - storage-db
+    volumes:
+      - ./output:/output
+    networks:
+      - backend
+  delivery:
+    build:
+      context: ./delivery
+    volumes:
+      - ./output:/output
+    ports:
+      - "5000:5000"
+    depends_on:
+      - preprocessing
+    networks:
+      - backend
+volumes:
+  pgdata:
+
+networks:
+  backend:
